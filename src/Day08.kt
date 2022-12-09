@@ -17,16 +17,9 @@ fun main() {
 
         for (y in 1 until map.size - 1) {
             for (x in 1 until map[y].size - 1) {
-                // LEFT
                 val left by lazy { (0 until x).all { map[y][it] < map[y][x] }  }
-
-                // RIGHT
                 val right by lazy { (x + 1 until map[y].size).all { map[y][it] < map[y][x] } }
-
-                // BOTTOM
                 val bottom by lazy { (y + 1 until map.size).all { map[it][x] < map[y][x] } }
-
-                // TOP
                 val top by lazy { (0 until y).all { map[it][x] < map[y][x] } }
 
                 if (left || right || bottom || top) {
@@ -35,9 +28,7 @@ fun main() {
             }
         }
 
-        val baseScore = 2 * (map.size - 2) + 2 * (map[0].size)
-
-        return baseScore + treeCount
+        return 2 * (map.size - 2) + 2 * (map[0].size) + treeCount
     }
 
     fun part2(input: List<String>): Int {
@@ -46,16 +37,9 @@ fun main() {
 
         for (y in 1 until map.size - 1) {
             for (x in 1 until map[y].size - 1) {
-                // LEFT
                 val left = (x - 1 downTo  1).countWhile { map[y][it] < map[y][x] } + 1
-
-                // RIGHT
                 val right = (x + 1 until map[y].size - 1).countWhile { map[y][it] < map[y][x] } + 1
-
-                // BOTTOM
                 val bottom = (y + 1 until map.size - 1).countWhile { map[it][x] < map[y][x] } + 1
-
-                // TOP
                 val top = (y - 1 downTo  1).countWhile { map[it][x] < map[y][x] } + 1
 
                 score = max(score, left * right * bottom * top)
